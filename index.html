@@ -1,523 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PRAKHAR DDOS - Login</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>UNSEEK DDOS</title>
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
+    html,
     body {
-      background-color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      height: 100dvh; /* For mobile address bars */
-      overflow: hidden;
-    }
-
-    /* Main App Wrapper */
-    .app-container {
-      width: 100%;
-      max-width: 420px;
-      height: 100%;
-      max-height: 900px;
-      background-color: #0d0d0d;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Top Banner */
-    .top-banner {
-      background-color: #000;
-      color: #fff;
-      text-align: center;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 10px 0;
-      letter-spacing: 0.5px;
-      z-index: 50;
-      flex-shrink: 0;
-    }
-
-    /* Scrollable Area - Handles the Slide Up Effect */
-    .scroll-area {
-      flex-grow: 1;
-      overflow-y: auto;
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 50% -20%, rgba(110, 255, 20, 0.22), transparent 32%),
+        radial-gradient(circle at 100% 20%, rgba(0, 140, 255, 0.18), transparent 28%),
+        #050505;
+      font-family: Inter, Arial, Helvetica, sans-serif;
       overflow-x: hidden;
       scroll-behavior: smooth;
-      scroll-snap-type: y mandatory;
-      scrollbar-width: none; /* Firefox */
-      position: relative;
-    }
-    .scroll-area::-webkit-scrollbar { display: none; } /* Safari/Chrome */
-
-    /* 1. Header Section (Dark) */
-    .header-section {
-      height: 65vh; /* Takes up 65% of screen initially */
-      min-height: 450px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 5vh;
-      scroll-snap-align: start; /* Snaps here */
-      z-index: 10;
+      text-rendering: optimizeSpeed;
     }
 
-    .logo-svg {
-      width: 150px;
-      height: 150px;
-      margin-bottom: 15px;
-    }
-
-    .brand-title {
-      color: #fff;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      margin-bottom: 30px;
-    }
-
-    .features-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-    }
-
-    .feature-icon {
-      width: 20px;
-      height: 20px;
+    body {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
+      color: #ffffff;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
     }
 
-    /* 2. Bottom Sheet Section (Light Grey Form) */
-    .bottom-sheet {
-      background-color: #d9d9d9;
-      min-height: 100vh; /* Fills screen when scrolled up */
-      border-top-left-radius: 40px;
-      border-top-right-radius: 40px;
-      margin-top: -10vh; /* Overlaps the header slightly */
-      padding: 0 25px 40px 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      scroll-snap-align: start; /* Snaps here for full screen form */
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+    .app {
+      width: min(402px, 100vw);
+      min-height: 100vh;
+      background: #000000;
+      overflow-x: clip;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    }
+
+    .screen {
       position: relative;
-      z-index: 20;
+      width: 402px;
+      min-height: 874px;
+      transform-origin: top left;
+      contain: layout paint style;
+      animation: screenIn 0.34s cubic-bezier(0.2, 0.9, 0.2, 1);
     }
 
-    /* Little visual pill to indicate swipe up */
-    .swipe-indicator {
-      width: 40px;
-      height: 5px;
-      background-color: #999;
-      border-radius: 5px;
-      margin: 15px 0 25px 0;
-      opacity: 0.6;
+    .screen[hidden] {
+      display: none;
     }
 
-    .welcome-text {
-      text-align: center;
-      font-size: 24px;
+    .login {
+      height: 874px;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(255, 255, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, #111111 0%, #080808 46%, #000000 100%);
+      overflow: hidden;
+    }
+
+    .discount {
+      position: absolute;
+      top: 7px;
+      left: 127px;
+      width: 199px;
+      margin: 0;
+      font-size: 14px;
       font-weight: 800;
-      color: #000;
-      line-height: 1.4;
-      margin-bottom: 15px;
+      line-height: 1.2;
+      text-shadow: 0 2px 18px rgba(255, 255, 255, 0.2);
     }
 
-    .welcome-text svg {
+    .login-logo {
+      position: absolute;
+      top: 57px;
+      left: 114px;
+      width: 184px;
+      height: 184px;
+      filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.4));
+    }
+
+    .login-brand {
+      position: absolute;
+      top: 239px;
+      left: 165px;
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-shadow: 0 8px 25px rgba(255, 255, 255, 0.18);
+    }
+
+    .secure-icon {
+      position: absolute;
+      top: 291px;
+      left: 75px;
       width: 24px;
       height: 24px;
-      vertical-align: text-bottom;
-      margin: 0 2px;
     }
 
-    .text-red { color: #ff0606; }
+    .secure-text {
+      position: absolute;
+      top: 291px;
+      left: 106px;
+      width: 377px;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
+      text-shadow: 0 10px 24px rgba(255, 255, 255, 0.18);
+    }
+
+    .warp {
+      position: absolute;
+      top: 322px;
+      left: 82px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .panel-shape,
+    .panel-fill {
+      position: absolute;
+      top: 392px;
+      height: 495px;
+      object-fit: fill;
+      max-width: none;
+      filter: drop-shadow(0 -18px 36px rgba(255, 255, 255, 0.1));
+    }
+
+    .panel-shape {
+      left: -6px;
+      width: 407px;
+    }
+
+    .panel-fill {
+      left: 1px;
+      width: 405px;
+    }
+
+    .welcome {
+      position: absolute;
+      top: 418px;
+      left: 0;
+      width: 402px;
+      margin: 0;
+      color: #111111;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .welcome-line {
+      display: block;
+    }
+
+    .welcome .red {
+      color: #ff0606;
+    }
+
+    .heart {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin: 0 3px -4px;
+      vertical-align: baseline;
+    }
 
     .divider {
-      width: 100%;
-      height: 1px;
-      background-color: #aaa;
-      margin: 20px 0 35px 0;
+      position: absolute;
+      top: 488px;
+      left: 6px;
+      width: 400px;
+      height: 2px;
     }
 
-    /* Input Forms */
-    .input-wrapper {
-      width: 100%;
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .input-field {
-      width: 100%;
-      background: #575757;
-      border: none;
-      border-radius: 12px;
-      padding: 18px 20px;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 600;
+    .field {
+      position: absolute;
+      left: 38px;
+      width: 318px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #696969 0%, #4f4f4f 100%);
+      color: #ffffff;
+      font: 800 16px/46px Inter, Arial, Helvetica, sans-serif;
       text-align: center;
       outline: none;
-      transition: background 0.3s;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 12px 24px rgba(0, 0, 0, 0.14);
+      transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
     }
 
-    .input-field::placeholder { color: rgba(255, 255, 255, 0.6); }
-
-    .input-field.error {
-      background: #ff4444;
-      animation: shake 0.5s;
+    .field::placeholder {
+      color: #ffffff;
+      opacity: 0.92;
     }
 
-    .info-icon {
+    .field:focus {
+      background: linear-gradient(180deg, #747474 0%, #555555 100%);
+      box-shadow:
+        0 0 0 3px rgba(0, 140, 255, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        0 18px 30px rgba(0, 0, 0, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .username {
+      top: 519px;
+    }
+
+    .passcode {
+      top: 584px;
+      padding: 0 48px;
+    }
+
+    .info {
       position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 22px;
-      height: 22px;
+      top: 596px;
+      left: 319px;
+      width: 24px;
+      height: 24px;
+      pointer-events: none;
     }
 
-    .instruction-text {
+    .hint {
+      position: absolute;
+      top: 640px;
+      left: 66px;
+      width: 313px;
+      margin: 0;
       color: #ca0000;
       font-size: 11px;
       font-weight: 800;
-      margin: -5px 0 30px 0;
+      line-height: 1.2;
       text-align: center;
     }
 
-    /* Actions Bottom Area */
-    .actions-container {
-      width: 100%;
-      margin-top: 40px; /* Pushes everything down below the fold */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .enter-btn {
-      background: #6eff14;
-      color: #fff;
-      border: none;
-      font-size: 24px;
-      font-weight: 800;
-      padding: 20px;
+    .enter {
+      position: absolute;
+      top: 678px;
+      left: 0;
+      width: 402px;
+      height: 64px;
+      border: 0;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #7dff2c 0%, #43f000 100%);
+      color: #ffffff;
       cursor: pointer;
-      transition: background 0.3s, transform 0.1s;
-      margin-bottom: 25px;
-      
-      /* Mobile styling: full width, no edges */
-      width: calc(100% + 50px); /* Overcomes the 25px padding on left/right */
-      margin-left: -25px;
-      margin-right: -25px;
-      border-radius: 0;
+      font: 800 24px/64px Inter, Arial, Helvetica, sans-serif;
+      text-align: center;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.36),
+        0 18px 32px rgba(83, 255, 0, 0.22);
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
     }
 
-    .enter-btn:hover { background: #5ee000; }
-    .enter-btn:active { transform: scale(0.98); }
-
-    .or-text {
+    .or {
+      position: absolute;
+      top: 758px;
+      left: 197px;
+      width: 39px;
+      margin: 0;
+      color: #000000;
       font-size: 14px;
       font-weight: 800;
-      color: #000;
-      margin-bottom: 20px;
+      line-height: 1.2;
     }
 
-    .secondary-actions {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
+    .telegram-bg {
+      position: absolute;
+      top: 784px;
+      left: 30px;
+      width: 73px;
+      height: 45px;
     }
 
-    .tg-btn {
-      width: 70px;
-      height: 50px;
-      background: #008cff;
-      border: none;
-      border-radius: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .telegram {
+      position: absolute;
+      top: 792px;
+      left: 46px;
+      width: 29px;
+      height: 29px;
+    }
+
+    .generate {
+      position: absolute;
+      top: 780px;
+      left: 102px;
+      width: 218px;
+      height: 54px;
+      border: 0;
+      border-radius: 81px;
+      background: linear-gradient(180deg, #139eff 0%, #0079e8 100%);
+      color: #ffffff;
       cursor: pointer;
-      flex-shrink: 0;
+      font: 800 14px/54px Inter, Arial, Helvetica, sans-serif;
+      text-align: center;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 15px 28px rgba(0, 140, 255, 0.22);
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
     }
 
-    .tg-btn svg { width: 30px; height: 30px; }
+    .app-screen {
+      min-height: 900px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(0, 140, 255, 0.18), transparent 30%),
+        linear-gradient(180deg, #050505 0%, #000000 55%, #030303 100%);
+      padding-bottom: 80px;
+    }
 
-    .gen-btn {
-      flex-grow: 1;
-      height: 50px;
-      background: #008cff;
-      color: #fff;
-      border: none;
-      border-radius: 30px;
-      font-size: 14px;
+    .top-logo {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      width: 35px;
+      height: 35px;
+      filter: drop-shadow(0 10px 18px rgba(255, 255, 255, 0.16));
+    }
+
+    .title {
+      position: absolute;
+      top: 15px;
+      left: 123px;
+      margin: 0;
+      font-size: 20px;
       font-weight: 800;
+      line-height: 1.2;
+      text-shadow: 0 12px 30px rgba(255, 255, 255, 0.18);
+    }
+
+    .menu {
+      position: absolute;
+      top: 10px;
+      left: 354px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      padding: 0;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.1);
       cursor: pointer;
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      display: grid;
+      place-items: center;
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
     }
 
-    /* Desktop Responsive Overrides */
-    @media (min-width: 421px) {
-      .app-container {
-        border-radius: 20px;
-        box-shadow: 0 0 40px rgba(0,0,0,0.8);
-      }
-      .scroll-area {
-        scroll-snap-type: none; /* Disable snapping on desktop */
-      }
-      .header-section {
-        height: auto;
-        min-height: auto;
-        padding-bottom: 50px;
-      }
-      .bottom-sheet {
-        min-height: auto;
-        margin-top: 0;
-        flex-grow: 1;
-        box-shadow: none;
-      }
-      .swipe-indicator { display: none; } /* Hide swipe indicator on desktop */
-      .enter-btn {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-        border-radius: 15px; /* Restore edges on desktop */
-      }
-      .actions-container {
-        margin-top: auto; /* Just push to bottom of remaining space */
-      }
+    .menu img {
+      width: 28px;
+      height: 28px;
     }
 
-    /* Success Message */
-    .success-msg {
+    .menu[aria-expanded="true"] {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        0 14px 30px rgba(0, 140, 255, 0.18);
+    }
+
+    .menu-panel {
+      position: absolute;
+      top: 58px;
+      left: 17px;
+      z-index: 5;
+      width: 368px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      background: rgba(24, 24, 26, 0.76);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.46);
+      backdrop-filter: blur(24px) saturate(1.3);
+      animation: sheetDrop 0.42s cubic-bezier(0.17, 0.89, 0.24, 1.12);
+      transform-origin: top right;
+    }
+
+    .menu-panel::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: 23px;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 92% 8%, rgba(255, 255, 255, 0.24), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 44%);
+    }
+
+    .menu-panel button {
+      position: relative;
+      width: 100%;
+      height: 58px;
+      border: 0;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
+        rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font: 800 15px/58px Inter, Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 12px 26px rgba(0, 0, 0, 0.24);
+      text-align: left;
+      padding: 0 18px;
+    }
+
+    .menu-panel button::after {
+      content: "LOGIN";
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      background: rgba(110, 255, 20, 0.95);
-      padding: 25px 40px;
-      border-radius: 20px;
-      font-size: 22px;
+      right: 18px;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 11px;
+      transform: translateY(-50%);
+    }
+
+    .attack-card {
+      position: absolute;
+      top: 97px;
+      left: 3px;
+      width: 402px;
+      height: 573px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 22%),
+        linear-gradient(180deg, #191919 28%, #5d5d5d 74%, #dddddd 100%);
+      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.36);
+    }
+
+    .status-shell {
+      position: absolute;
+      top: 102px;
+      left: 8px;
+      width: 386px;
+      height: 54px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.28);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .status-title {
+      position: absolute;
+      top: 109px;
+      left: 27px;
+      margin: 0;
+      font-size: 12px;
       font-weight: 800;
-      color: #000;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 100;
+      line-height: 1.2;
+    }
+
+    .cell {
+      position: absolute;
+      top: 128px;
+      left: 37px;
+      width: 23px;
+      height: 23px;
+    }
+
+    .node-count {
+      position: absolute;
+      top: 132px;
+      left: 74px;
+      margin: 0;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .active-pill {
+      position: absolute;
+      top: 109px;
+      left: 185px;
+      width: 204px;
+      height: 38px;
+      border-radius: 19px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+
+    .user-icon {
+      position: absolute;
+      top: 115px;
+      left: 196px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .active-text {
+      position: absolute;
+      top: 119px;
+      left: 227px;
+      margin: 0;
+      color: #151515;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .form-label {
+      position: absolute;
+      left: 37px;
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .label-ip {
+      top: 218px;
+    }
+
+    .label-port {
+      top: 323px;
+    }
+
+    .label-time {
+      top: 414px;
+    }
+
+    .attack-input {
+      position: absolute;
+      left: 22px;
+      width: 359px;
+      height: 54px;
+      padding: 0 26px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(20, 34, 105, 0.82), rgba(44, 58, 128, 0.76));
+      color: #ffffff;
+      outline: none;
+      font: 800 12px/54px Inter, Arial, Helvetica, sans-serif;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 14px 26px rgba(0, 0, 0, 0.14);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .attack-input::placeholder {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    .attack-input:focus {
+      border-color: rgba(117, 189, 255, 0.86);
+      box-shadow:
+        0 0 0 4px rgba(0, 140, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        0 18px 30px rgba(0, 0, 0, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .ip-input {
+      top: 249px;
+    }
+
+    .port-input {
+      top: 345px;
+    }
+
+    .time-input {
+      top: 437px;
+    }
+
+    .attack-btn {
+      position: absolute;
+      top: 539px;
+      left: 18px;
+      width: 370px;
+      height: 67px;
+      border: 0;
+      border-radius: 108px;
+      background: linear-gradient(180deg, #ff4b4f 0%, #db2f35 100%);
+      color: #ffffff;
+      cursor: pointer;
+      font: 800 16px/67px Inter, Arial, Helvetica, sans-serif;
       text-align: center;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        0 20px 32px rgba(255, 0, 4, 0.22);
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .hand {
+      position: absolute;
+      top: 612px;
+      left: 22px;
+      width: 35px;
+      height: 35px;
+    }
+
+    .free-text {
+      position: absolute;
+      top: 627px;
+      left: 72px;
+      margin: 0;
+      color: #000000;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
       white-space: nowrap;
     }
 
-    .success-msg.show {
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+    .running-title {
+      position: absolute;
+      top: 698px;
+      left: 15px;
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
     }
 
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-8px); }
-      40%, 80% { transform: translateX(8px); }
+    .running-bar {
+      position: absolute;
+      top: 744px;
+      left: -8px;
+      width: 413px;
+      min-height: 63px;
+      padding: 20px 23px;
+      border: 5px solid #ff0000;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #15be28 0%, #049414 100%);
+      color: #000000;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 16px 30px rgba(4, 148, 20, 0.24);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      z-index: 20;
+      width: min(360px, calc(100vw - 28px));
+      padding: 13px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: rgba(32, 32, 32, 0.82);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(18px);
+      transform: translateX(-50%) translateY(120px);
+      transition: transform 0.24s ease;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .ripple-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      pointer-events: none;
+      overflow: hidden;
+      contain: strict;
+    }
+
+    .water-drop {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      left: var(--drop-x);
+      top: var(--drop-y);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.86) 0 8%, rgba(129, 213, 255, 0.3) 22%, rgba(0, 140, 255, 0.16) 46%, rgba(0, 0, 0, 0) 72%);
+      transform: translate3d(-50%, -50%, 0) scale(0.16);
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      animation: waterDrop 0.64s cubic-bezier(0.2, 0.82, 0.18, 1) forwards;
+    }
+
+    .water-drop::after {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: inherit;
+      transform: translateZ(0) scale(0.45);
+      will-change: transform, opacity;
+      animation: waterRing 0.64s ease-out forwards;
+    }
+
+    button:hover {
+      filter: brightness(1.04);
+    }
+
+    button:active {
+      transform: scale(0.985);
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(0, 140, 255, 0.42);
+      outline-offset: 3px;
+    }
+
+    .is-loading {
+      pointer-events: none;
+      filter: saturate(0.75);
+    }
+
+    .pulse {
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes screenIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes sheetDrop {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, -18px, 0) scale(0.9);
+      }
+
+      58% {
+        opacity: 1;
+        transform: translate3d(0, 3px, 0) scale(1.01);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes waterDrop {
+      0% {
+        opacity: 0;
+        transform: translate3d(-50%, -50%, 0) scale(0.16);
+      }
+
+      18% {
+        opacity: 1;
+      }
+
+      66% {
+        opacity: 0.86;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate3d(-50%, -50%, 0) scale(38);
+      }
+    }
+
+    @keyframes waterRing {
+      0% {
+        opacity: 0.68;
+        transform: translateZ(0) scale(0.45);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateZ(0) scale(2.55);
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 16px 30px rgba(4, 148, 20, 0.24);
+      }
+
+      50% {
+        box-shadow: 0 18px 38px rgba(4, 148, 20, 0.45);
+      }
+    }
+
+    @media (min-width: 520px) {
+      body {
+        align-items: flex-start;
+        padding-top: 32px;
+        padding-bottom: 32px;
+      }
+
+      .app {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 34px;
+        overflow: hidden;
+      }
+    }
+
+    @media (max-width: 401px) {
+      .screen {
+        transform: scale(calc(100vw / 402));
+      }
+
+      .app {
+        min-height: calc(874px * (100vw / 402));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html,
+      body {
+        scroll-behavior: auto;
+      }
+
+      .screen,
+      .pulse {
+        animation: none;
+      }
+
+      .water-drop,
+      .water-drop::after {
+        animation-duration: 0.24s;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="app">
+    <main class="screen login" id="loginScreen" aria-label="UNSEEK login screen">
+      <p class="discount">45% DISCOUNT ON DDOS</p>
+      <img class="login-logo" src="./assets/attack-the-block.svg" alt="" />
+      <p class="login-brand">UNSEEK</p>
+      <img class="secure-icon" src="./assets/encrypted.svg" alt="" />
+      <p class="secure-text">ENCRYPTED 100 % SECURE</p>
+      <img class="warp" src="./assets/warp-group.svg" alt="" />
 
-  <div class="app-container">
-    <div class="top-banner">45% DISCOUNT ON DDOS</div>
+      <img class="panel-shape" src="./assets/rectangle-1.svg" alt="" />
+      <img class="panel-fill" src="./assets/rectangle-5.svg" alt="" />
 
-    <div class="scroll-area" id="scrollArea">
-      
-      <!-- Top Dark Section -->
-      <div class="header-section">
-        <svg class="logo-svg" viewBox="0 0 184 184" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M92 21.0833H85.79L22.9233 113.582M92 21.0833V113.582M92 21.0833H98.21L161.077 113.582M92 113.582H22.9233M92 113.582H161.077M22.9233 113.582V162.917L67.0833 113.582M101.123 113.582L115.843 130.065H68.1567L82.915 113.582M161.077 113.582V162.917L116.917 113.582" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-        </svg>
-        
-        <div class="brand-title">UNSEEK</div>
+      <p class="welcome">
+        <span class="welcome-line">WELCOME <img class="heart" src="./assets/heart.svg" alt="" /> TO</span>
+        <span class="welcome-line"><span class="red">PRAKHAR</span> DDOS</span>
+      </p>
+      <img class="divider" src="./assets/line-1.svg" alt="" />
 
-        <div class="features-list">
-          <div class="feature-item">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.288 21.713C17.096 21.521 17 21.2833 17 21V19H15C14.7167 19 14.4793 18.904 14.288 18.712C14.0967 18.52 14.0007 18.2827 14 18C13.9993 17.7173 14.0953 17.48 14.288 17.288C14.4807 17.096 14.718 17 15 17H17V15C17 14.7167 17.096 14.4793 17.288 14.288C17.48 14.0967 17.7173 14.0007 18 14C18.2827 13.9993 18.5203 14.0953 18.713 14.288C18.9057 14.4807 19.0013 14.718 19 15V17H21C21.2833 17 21.521 17.096 21.713 17.288C21.905 17.48 22.0007 17.7173 22 18C21.9993 18.2827 21.9033 18.5203 21.712 18.713C21.5207 18.9057 21.2833 19.0013 21 19H19V21C19 21.2833 18.904 21.521 18.712 21.713C18.52 21.905 18.2827 22.0007 18 22C17.7173 21.9993 17.48 21.9043 17.288 21.713ZM11.825 21.95C9.575 21.4 7.70833 20.0877 6.225 18.013C4.74167 15.9383 4 13.634 4 11.1V6.375C4 5.95833 4.121 5.58333 4.363 5.25C4.605 4.91667 4.91733 4.675 5.3 4.525L11.3 2.275C11.5333 2.19167 11.7667 2.15 12 2.15C12.2333 2.15 12.4667 2.19167 12.7 2.275L18.7 4.525C19.0833 4.675 19.396 4.91667 19.638 5.25C19.88 5.58333 20.0007 5.95833 20 6.375V11.15C20 11.45 19.8833 11.6917 19.65 11.875C19.4167 12.0583 19.15 12.125 18.85 12.075C18.7 12.0417 18.55 12.021 18.4 12.013C18.25 12.005 18.1 12.0007 17.95 12C17.0167 12.0167 16.1583 12.221 15.375 12.613C14.5917 13.005 13.925 13.534 13.375 14.2L12.925 11.775C13.2583 11.6083 13.521 11.3667 13.713 11.05C13.905 10.7333 14.0007 10.3833 14 10C14 9.45 13.8043 8.97933 13.413 8.588C13.0217 8.19667 12.5507 8.00067 12 8C11.4493 7.99933 10.9787 8.19533 10.588 8.588C10.1973 8.98067 10.0013 9.45133 10 10C10 10.3833 10.096 10.7333 10.288 11.05C10.48 11.3667 10.7423 11.6083 11.075 11.775L10.6 14.4C10.5667 14.55 10.6043 14.6877 10.713 14.813C10.8217 14.9383 10.9507 15.0007 11.1 15H12.8C12.55 15.4333 12.3543 15.9043 12.213 16.413C12.0717 16.9217 12.0007 17.4507 12 18C12 18.4667 12.0543 18.9293 12.163 19.388C12.2717 19.8467 12.434 20.284 12.65 20.7C12.8667 21.0667 12.8627 21.4 12.638 21.7C12.4133 22 12.1423 22.0833 11.825 21.95Z" fill="white"/>
-              </svg>
-            </div>
-            <span>ENCRYPTED 100 % SECURE</span>
-          </div>
-          
-          <div class="feature-item">
-            <div class="feature-icon">
-              <svg viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.1645 0H18.7605C20.043 0 21 1.074 21 2.4V12.6C21 13.926 19.923 15 18.6405 15H7.836L11.1645 0Z" fill="#CFD8DC"/>
-                <path d="M9 3H2.2995C1.029 3 0 4.0725 0 5.3985V15.6015C0 16.926 1.0755 18 2.3445 18H10.185L10.5 16.5H6L9 3Z" fill="#CFD8DC"/>
-              </svg>
-            </div>
-            <span>HIGH BANDWIDTH ATTACK</span>
-          </div>
-        </div>
+      <input class="field username" id="username" type="text" placeholder="ENTER USERNAME" aria-label="Enter username" autocomplete="username" />
+      <input class="field passcode" id="passcode" type="password" placeholder="PASSCODE" aria-label="Passcode" autocomplete="current-password" />
+      <img class="info" src="./assets/info-circle.svg" alt="" />
+      <p class="hint">after filling username and passcode click "enter"</p>
+
+      <button class="enter" id="enterBtn" type="button">ENTER</button>
+      <p class="or">OR</p>
+      <img class="telegram-bg" src="./assets/telegram-bg.svg" alt="" />
+      <img class="telegram" src="./assets/telegram.svg" alt="" />
+      <button class="generate" id="generateBtn" type="button">GENERATE PASSCODE</button>
+    </main>
+
+    <section class="screen app-screen" id="attackScreen" aria-label="UNSEEK attack dashboard" hidden>
+      <img class="top-logo" src="./assets/attack-the-block-small.svg" alt="" />
+      <p class="title">UNSEEK&nbsp; DDOS</p>
+      <button class="menu" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
+        <img src="./assets/grip-lines.svg" alt="" />
+      </button>
+      <div class="menu-panel" id="menuPanel" hidden>
+        <button type="button" id="backBtn">BACK LOGIN</button>
       </div>
 
-      <!-- Bottom Form Section -->
-      <div class="bottom-sheet" id="bottomSheet">
-        <div class="swipe-indicator"></div>
+      <div class="attack-card"></div>
+      <div class="status-shell"></div>
+      <p class="status-title">NODE CONNECTED</p>
+      <img class="cell" src="./assets/cell-tower.svg" alt="" />
+      <p class="node-count">3/4</p>
+      <div class="active-pill"></div>
+      <img class="user-icon" src="./assets/user-active.svg" alt="" />
+      <p class="active-text" id="activeText">USER ACTIVE : 0</p>
 
-        <div class="welcome-text">
-          WELCOME 
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z" fill="#FF0000" />
-          </svg> 
-          TO <br>
-          <span class="text-red">PRAKHAR</span> DDOS
-        </div>
+      <p class="form-label label-ip">ENTER IP :</p>
+      <input class="attack-input ip-input" id="ipInput" type="text" placeholder="20.235.67.89" aria-label="Enter IP" inputmode="decimal" autocomplete="off" />
+      <p class="form-label label-port">PORT :</p>
+      <input class="attack-input port-input" id="portInput" type="text" placeholder="12018" aria-label="Port" inputmode="numeric" autocomplete="off" />
+      <p class="form-label label-time">TIME :</p>
+      <input class="attack-input time-input" id="timeInput" type="text" placeholder="MAX :300 SEC" aria-label="Time" inputmode="numeric" autocomplete="off" />
 
-        <div class="divider"></div>
-
-        <div class="input-wrapper">
-          <input type="text" id="username" class="input-field" placeholder="ENTER USERNAME" maxlength="20">
-        </div>
-
-        <div class="input-wrapper">
-          <input type="password" id="passcode" class="input-field" placeholder="PASSCODE" maxlength="15">
-          <svg class="info-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 23.25C5.787 23.25 0.75 18.213 0.75 12C0.75 5.787 5.787 0.75 12 0.75C18.213 0.75 23.25 5.787 23.25 12C23.25 18.213 18.213 23.25 12 23.25ZM10 6.25C10 5.71957 10.2107 5.21086 10.5858 4.83579C10.9609 4.46071 11.4696 4.25 12 4.25C12.5304 4.25 13.0391 4.46071 13.4142 4.83579C13.7893 5.21086 14 5.71957 14 6.25C14 6.78043 13.7893 7.28914 13.4142 7.66421C13.0391 8.03929 12.5304 8.25 12 8.25C11.4696 8.25 10.9609 8.03929 10.5858 7.66421C10.2107 7.28914 10 6.78043 10 6.25ZM13.44 10.557C13.405 9.988 13.041 9.546 12.472 9.513C12.3148 9.50402 12.1574 9.49969 12 9.5H10.25C9.9575 9.5 9.713 9.5075 9.5095 9.5185C8.916 9.5515 8.5195 9.989 8.5045 10.5835C8.49748 10.8613 8.49748 11.1392 8.5045 11.417C8.5195 12.011 8.916 12.4485 9.5095 12.4815C9.84002 12.4992 10.1711 12.5047 10.502 12.498C10.5007 12.657 10.5 12.8243 10.5 13V16.014C9.865 16.0275 9.3915 16.048 9.044 16.069C8.497 16.1025 8.058 16.439 8.0175 16.9855C8.00617 17.1328 8.00033 17.3043 8 17.5C8 17.697 8.0065 17.867 8.0175 18.0145C8.0575 18.5605 8.497 18.8975 9.044 18.931C9.624 18.966 10.555 19 12 19C13.445 19 14.3765 18.9665 14.956 18.931C15.503 18.8975 15.942 18.561 15.9825 18.0145C15.9938 17.8675 15.9997 17.696 16 17.5C15.9997 17.304 15.9938 17.1327 15.9825 16.986C15.9425 16.439 15.503 16.1025 14.956 16.069C14.4711 16.041 13.9857 16.0226 13.5 16.014V13C13.5 11.8485 13.472 11.07 13.44 10.557Z" fill="#B2B2B2"/>
-          </svg>
-        </div>
-
-        <p class="instruction-text">after filling username and passcode click "enter"</p>
-
-        <!-- Push remaining items below fold so user HAS to scroll -->
-        <div class="actions-container">
-          <button class="enter-btn" onclick="handleLogin()">ENTER</button>
-
-          <p class="or-text">OR</p>
-
-          <div class="secondary-actions">
-            <button class="tg-btn" onclick="openTelegram()">
-              <svg viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.5 0C22.5084 0 29 6.49165 29 14.5C29 22.5084 22.5084 29 14.5 29C6.49165 29 0 22.5084 0 14.5C0 6.49165 6.49165 0 14.5 0ZM20.9409 8.7C20.3885 8.71015 19.5402 9.00015 15.4614 10.6749C12.5983 11.8701 9.74318 13.0843 6.8962 14.3173C6.2002 14.5909 5.83625 14.8582 5.80435 15.1192C5.74055 15.6209 6.47135 15.776 7.39065 16.0718C8.1403 16.3125 9.1495 16.5938 9.6744 16.6054C10.15 16.6151 10.6807 16.4217 11.2665 16.0254C15.2675 13.3574 17.3328 12.0094 17.4624 11.9813C17.5537 11.961 17.6799 11.935 17.7669 12.0104C17.8524 12.0858 17.8437 12.2279 17.8336 12.267C17.7611 12.573 14.0041 15.9471 13.7881 16.169L13.6837 16.2733C12.8862 17.0607 12.0814 17.5755 13.4705 18.4788C14.7262 19.2952 15.457 19.8157 16.7475 20.6538C17.574 21.1874 18.2222 21.8211 19.0748 21.7442C19.4677 21.708 19.8723 21.344 20.0796 20.2565C20.5654 17.69 21.5224 12.1249 21.7428 9.831C21.7566 9.64074 21.7483 9.44951 21.7181 9.26115C21.7002 9.10904 21.6257 8.96925 21.5093 8.86965C21.3339 8.72755 21.0613 8.69855 20.9409 8.7Z" fill="black"/>
-              </svg>
-            </button>
-            <button class="gen-btn" onclick="generatePasscode()">GENERATE PASSCODE</button>
-          </div>
-        </div>
+      <button class="attack-btn" id="attackBtn" type="button">ATTACK</button>
+      <img class="hand" src="./assets/hand-icon.svg" alt="" />
+      <p class="free-text">THERE IS NO SPACE FOR FREE USER</p>
+      <p class="running-title">RUNNING ATTACK :</p>
+      <div class="running-bar" id="runningBar">
+        <span>IP : 20.235.67.89</span>
+        <span>PORT : 12018</span>
+        <span>TIME : 29 SEC LEFT</span>
       </div>
-      
-    </div>
-
-    <!-- Success Output -->
-    <div id="successMessage" class="success-msg">✓ LOGIN SUCCESS</div>
+    </section>
   </div>
 
-  <script>
-    // Valid credentials setup
-    const VALID_CREDENTIALS = {
-      username: 'admin',
-      passcode: '12345'
-    };
+  <div class="ripple-layer" id="rippleLayer" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    // Auto-scroll sheet to full screen when user clicks an input field
-    document.querySelectorAll('.input-field').forEach(input => {
-      input.addEventListener('focus', () => {
-        if(window.innerWidth <= 420) {
-          document.getElementById('bottomSheet').scrollIntoView({ behavior: 'smooth' });
+  <script>
+    const loginScreen = document.getElementById("loginScreen");
+    const attackScreen = document.getElementById("attackScreen");
+    const username = document.getElementById("username");
+    const passcode = document.getElementById("passcode");
+    const enterBtn = document.getElementById("enterBtn");
+    const generateBtn = document.getElementById("generateBtn");
+    const menuBtn = document.getElementById("menuBtn");
+    const menuPanel = document.getElementById("menuPanel");
+    const backBtn = document.getElementById("backBtn");
+    const attackBtn = document.getElementById("attackBtn");
+    const ipInput = document.getElementById("ipInput");
+    const portInput = document.getElementById("portInput");
+    const timeInput = document.getElementById("timeInput");
+    const runningBar = document.getElementById("runningBar");
+    const rippleLayer = document.getElementById("rippleLayer");
+    const toast = document.getElementById("toast");
+    const activeText = document.getElementById("activeText");
+    const SUPABASE_URL = "https://ewefbbswaaheqkqsfbzx.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV3ZWZiYnN3YWFoZXFrcXNmYnp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3ODA2NzIsImV4cCI6MjA4MDM1NjY3Mn0.QfdRKCO1gW9wvUWMcT4ocYVYs_rm-LS-nQV2u1Qyaqc";
+    const PASSCODE_TABLE = "passcodes";
+    const TELEGRAM_BOT_USERNAME = "unseekai_bot";
+    let timerId = null;
+    let activeTimerId = null;
+
+    function tapFeedback() {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(10);
+      }
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast.hideTimer);
+      showToast.hideTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function waterTransition(source, callback) {
+      const rect = source.getBoundingClientRect();
+      const drop = document.createElement("span");
+      drop.className = "water-drop";
+      drop.style.setProperty("--drop-x", `${rect.left + rect.width / 2}px`);
+      drop.style.setProperty("--drop-y", `${rect.top + rect.height / 2}px`);
+      rippleLayer.appendChild(drop);
+      window.setTimeout(() => requestAnimationFrame(callback), 180);
+      drop.addEventListener("animationend", () => drop.remove(), { once: true });
+    }
+
+    function showAttackScreen(source = enterBtn) {
+      tapFeedback();
+      waterTransition(source, () => {
+        loginScreen.hidden = true;
+        attackScreen.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        showToast("Dashboard opened");
+      });
+    }
+
+    function showLoginScreen(source = backBtn) {
+      tapFeedback();
+      waterTransition(source, () => {
+        clearInterval(timerId);
+        attackBtn.classList.remove("is-loading");
+        runningBar.classList.remove("pulse");
+        attackScreen.hidden = true;
+        loginScreen.hidden = false;
+        menuPanel.hidden = true;
+        menuBtn.setAttribute("aria-expanded", "false");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
+
+    function isSupabaseConfigured() {
+      return (
+        SUPABASE_URL.startsWith("https://") &&
+        !SUPABASE_URL.includes("YOUR_PROJECT_REF") &&
+        SUPABASE_ANON_KEY &&
+        SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"
+      );
+    }
+
+    async function findPasscode(userName, code) {
+      const params = new URLSearchParams({
+        select: "id,username,passcode,expires_at,used",
+        username: `eq.${userName}`,
+        passcode: `eq.${code}`,
+        used: "eq.false",
+        limit: "1"
+      });
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${PASSCODE_TABLE}?${params}`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to check passcode");
+      }
+
+      const rows = await response.json();
+      const match = rows[0];
+      if (!match) {
+        return null;
+      }
+
+      if (match.expires_at && Date.parse(match.expires_at) < Date.now()) {
+        return null;
+      }
+
+      return match;
+    }
+
+    async function markPasscodeUsed(id) {
+      if (!id) return;
+
+      await fetch(`${SUPABASE_URL}/rest/v1/${PASSCODE_TABLE}?id=eq.${id}`, {
+        method: "PATCH",
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+        body: JSON.stringify({ used: true })
+      }).catch(() => {});
+    }
+
+    async function login() {
+      const userName = username.value.trim();
+      const code = passcode.value.trim();
+
+      if (!userName) {
+        username.focus();
+        showToast("Enter username first");
+        return;
+      }
+
+      if (!code) {
+        passcode.focus();
+        showToast("Enter or generate passcode");
+        return;
+      }
+
+      if (!isSupabaseConfigured()) {
+        showToast("Supabase config missing");
+        return;
+      }
+
+      enterBtn.disabled = true;
+      showToast("Checking passcode...");
+
+      try {
+        const match = await findPasscode(userName, code);
+        if (!match) {
+          showToast("Invalid or expired passcode");
+          passcode.focus();
+          return;
+        }
+
+        await markPasscodeUsed(match.id);
+      } catch (error) {
+        showToast(error.message || "Login failed");
+        return;
+      } finally {
+        enterBtn.disabled = false;
+      }
+
+      showAttackScreen(enterBtn);
+    }
+
+    function generatePasscode() {
+      tapFeedback();
+      if (!username.value.trim()) {
+        username.value = "PRAKHAR";
+      }
+
+      if (!TELEGRAM_BOT_USERNAME || TELEGRAM_BOT_USERNAME === "YOUR_BOT_USERNAME") {
+        showToast("Telegram bot username missing");
+        return;
+      }
+
+      const userName = encodeURIComponent(username.value.trim());
+      window.open(`https://t.me/${TELEGRAM_BOT_USERNAME}?start=${userName}`, "_blank", "noopener");
+      showToast("Telegram bot opened");
+    }
+
+    function updateActiveUsers() {
+      activeText.textContent = `USER ACTIVE : ${Math.floor(1 + Math.random() * 200)}`;
+    }
+
+    function readSeconds() {
+      const match = timeInput.value.match(/\d+/);
+      const seconds = match ? Number(match[0]) : 300;
+      return Math.min(Math.max(seconds, 1), 300);
+    }
+
+    function runAttackDemo() {
+      tapFeedback();
+      clearInterval(timerId);
+      let remaining = readSeconds();
+      const ip = ipInput.value.trim() || "20.235.67.89";
+      const port = portInput.value.trim() || "12018";
+      attackBtn.classList.add("is-loading");
+      runningBar.classList.add("pulse");
+
+      function render() {
+        runningBar.innerHTML = `
+          <span>IP : ${ip}</span>
+          <span>PORT : ${port}</span>
+          <span>TIME : ${remaining} SEC LEFT</span>
+        `;
+      }
+
+      render();
+      showToast("Demo attack timer started");
+      timerId = setInterval(() => {
+        remaining -= 1;
+        render();
+
+        if (remaining <= 0) {
+          clearInterval(timerId);
+          attackBtn.classList.remove("is-loading");
+          runningBar.classList.remove("pulse");
+          runningBar.innerHTML = `<span>ATTACK FINISHED</span>`;
+          showToast("Timer finished");
+        }
+      }, 1000);
+    }
+
+    enterBtn.addEventListener("click", login);
+    generateBtn.addEventListener("click", generatePasscode);
+    attackBtn.addEventListener("click", runAttackDemo);
+    backBtn.addEventListener("click", () => showLoginScreen(backBtn));
+    menuBtn.addEventListener("click", () => {
+      menuPanel.hidden = !menuPanel.hidden;
+      menuBtn.setAttribute("aria-expanded", String(!menuPanel.hidden));
+      tapFeedback();
+    });
+
+    [username, passcode].forEach((input) => {
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          login();
         }
       });
     });
 
-    function handleLogin() {
-      const usernameInput = document.getElementById('username');
-      const passcodeInput = document.getElementById('passcode');
-      const username = usernameInput.value.trim();
-      const passcode = passcodeInput.value.trim();
-      
-      usernameInput.classList.remove('error');
-      passcodeInput.classList.remove('error');
-
-      if (!username || !passcode) {
-        if (!username) usernameInput.classList.add('error');
-        if (!passcode) passcodeInput.classList.add('error');
-        
-        setTimeout(() => {
-          usernameInput.classList.remove('error');
-          passcodeInput.classList.remove('error');
-        }, 500);
-        return;
-      }
-
-      // Check validation
-      if (username === VALID_CREDENTIALS.username && passcode === VALID_CREDENTIALS.passcode) {
-        const successMsg = document.getElementById('successMessage');
-        successMsg.classList.add('show');
-        
-        usernameInput.value = '';
-        passcodeInput.value = '';
-        
-        setTimeout(() => {
-          successMsg.classList.remove('show');
-        }, 3000);
-      } else {
-        usernameInput.classList.add('error');
-        passcodeInput.classList.add('error');
-        
-        setTimeout(() => {
-          usernameInput.classList.remove('error');
-          passcodeInput.classList.remove('error');
-        }, 500);
-      }
-    }
-
-    function generatePasscode() {
-      const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; 
-      let passcode = '';
-      for (let i = 0; i < 8; i++) {
-        passcode += characters.charAt(Math.floor(Math.random() * characters.length));
-      }
-      
-      const passcodeField = document.getElementById('passcode');
-      passcodeField.value = passcode;
-      
-      passcodeField.style.background = '#4CAF50';
-      setTimeout(() => {
-        passcodeField.style.background = '#575757';
-      }, 300);
-    }
-
-    function openTelegram() {
-      window.open('https://t.me/', '_blank');
-    }
-
-    document.querySelectorAll('.input-field').forEach(input => {
-      input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') handleLogin();
-      });
-    });
+    updateActiveUsers();
+    activeTimerId = setInterval(updateActiveUsers, 2200);
   </script>
 </body>
 </html>
